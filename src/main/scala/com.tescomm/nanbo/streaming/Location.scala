@@ -181,8 +181,7 @@ object Location {
                   val Array(lon, lat, x, y) = GetRandomGrid.getLonLatXY(strArr(mcSeqSchema.mcseq_lac), strArr(mcSeqSchema.mcseq_ci), sgRlib1.value)
                   // 获取区域信息
                   val sg = x + "," + y
-//                  val info = gridinfolib1.value.getOrElse(sg, "||||")
-                  val info = "4|110|||"
+                  val info = gridinfolib1.value.getOrElse(sg, "||||")
                   // 活取归属地信息
                   val localeid = tellib1.value.getOrElse(msisdn.slice(0, 7), "")
                   if ("||||" != info && "" != localeid && nullSeq != strArr(mcSeqSchema.mcseq_imsi) && nullSeq != msisdn) {
