@@ -51,6 +51,9 @@ object Location {
 
     val conf = new SparkConf()
     val sc = new SparkContext(conf)
+    val hadoopconf1 = sc.hadoopConfiguration
+    hadoopconf1.set("mapred.output.compress", "false")
+    hadoopconf1.set("mapred.compress.map.output", "false")
     // 手机归属地表(tel_locale_info)
     val tellib = RedisUtils.getResultMap("tel_locale_info")
     val tellib1 = sc.broadcast(tellib)
