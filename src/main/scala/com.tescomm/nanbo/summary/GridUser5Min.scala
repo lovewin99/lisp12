@@ -42,11 +42,11 @@ object GridUser5Min {
   }
 
   //5分钟栅格人数
-  def GridSumPersion(rdd: RDD[Array[String]],path: String) = {
-    val nowDate = DateUtils.getNowTime
-    println(s"nowDate:  $nowDate")
-    val endTime = DateUtils.getEndTime(nowDate)
-    println(s"endTime: $endTime")
+  def GridSumPersion(rdd: RDD[Array[String]],path: String, usetime: String) = {
+//    val nowDate = DateUtils.getNowTime
+//    println(s"nowDate:  $nowDate")
+    val endTime = DateUtils.getEndTime(usetime)
+//    println(s"endTime: $endTime")
     val extractorRDD = rdd.mapPartitions { rs =>
       rs map {
         case GridUser5Min(imsi, msisdn, localeid, areaid, lon, lat, x, y) =>

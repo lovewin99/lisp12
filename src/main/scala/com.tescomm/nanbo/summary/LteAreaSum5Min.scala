@@ -14,10 +14,10 @@ object LteAreaSum5Min {
   val DATA_BASE = prop.getOrElse("DATA_BASE", "")
 
   /** 区域及归属地汇总 */
-  def sumProcess1(dataRDD: RDD[Array[String]], path: String) = {
+  def sumProcess1(dataRDD: RDD[Array[String]], path: String, usetime: String) = {
     val str = s"insert into area_source_5 values ('#', '#', '#', '#', #)"
-    val nowDate = DateUtils.getNowTime
-    val time = DateUtils.getEndTime(nowDate)
+//    val nowDate = DateUtils.getNowTime
+    val time = DateUtils.getEndTime(usetime)
     val calcSize = "5分钟"
 
     val resultRdd = dataRDD.flatMap { x =>
@@ -33,10 +33,10 @@ object LteAreaSum5Min {
   }
 
   /** 区域汇总(本外) */
-  def sumProcess2(dataRDD: RDD[Array[String]], path: String) = {
+  def sumProcess2(dataRDD: RDD[Array[String]], path: String, usetime: String) = {
     val str = s"insert into area_count_5 values ('#', '#', #)"
-    val nowDate = DateUtils.getNowTime
-    val time = DateUtils.getEndTime(nowDate)
+//    val nowDate = DateUtils.getNowTime
+    val time = DateUtils.getEndTime(usetime)
 
     val resultRdd = dataRDD.flatMap { x =>
       val imsi_msisdn = x(1) + "_" + x(2)

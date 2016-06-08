@@ -250,16 +250,16 @@ object Location {
       myrdd.map(_.mkString(",")).saveAsTextFile(path)
 
       // 5分钟栅格汇总
-      val path1 = Array[String](pathgrid, day, hour, minute).mkString("/")
-      GridUser5Min.GridSumPersion(myrdd, path1)
-
-      // 归属地汇总
-      val path2 = Array[String](pathlocale, day, hour, minute).mkString("/")
-      LteAreaSum5Min.sumProcess1(myrdd, path2)
-
-      // 区域5分钟汇总
-      val path3 = Array[String](patharea, day, hour, minute).mkString("/")
-      LteAreaSum5Min.sumProcess2(myrdd, path3)
+//      val path1 = Array[String](pathgrid, day, hour, minute).mkString("/")
+//      GridUser5Min.GridSumPersion(myrdd, path1)
+//
+//      // 归属地汇总
+//      val path2 = Array[String](pathlocale, day, hour, minute).mkString("/")
+//      LteAreaSum5Min.sumProcess1(myrdd, path2)
+//
+//      // 区域5分钟汇总
+//      val path3 = Array[String](patharea, day, hour, minute).mkString("/")
+//      LteAreaSum5Min.sumProcess2(myrdd, path3)
     }
 
 //    result.cache()

@@ -38,8 +38,8 @@ object Location {
 
   def main(args: Array[String]): Unit = {
 
-    if (args.length != 5) {
-      System.out.println("usage: <in-path> <out-path> <path1> <path2> <path3>")
+    if (args.length != 6) {
+      System.out.println("usage: <in-path> <out-path> <path1> <path2> <path3> <time>")
       System.exit(1)
     }
 
@@ -47,7 +47,13 @@ object Location {
 //    Logger.getLogger("org.apache.spark").setLevel(Level.WARN)
 //    Logger.getLogger("org.eclipse.jetty.service").setLevel(Level.OFF)
 
-    val Array(inPath, outPath, pathgrid, pathlocale, patharea) = args
+    val Array(inPath, outPath, pathgrid, pathlocale, patharea, usetime) = args
+
+//    val nowTime = DateUtils.getNowTime
+    val endTime = DateUtils.getEndTime(usetime).replaceAll("[\\-: ]", "")
+    val day = endTime.slice(0, 8)
+    val hour = endTime.slice(8, 10)
+    val minute = endTime.slice(10, 12)
 
     val conf = new SparkConf()
     val sc = new SparkContext(conf)
@@ -223,27 +229,22 @@ object Location {
         }
       }.filter(_.length != 0)
       myrdd.cache()
-      val nowTime = DateUtils.getNowTime
-      val endTime = DateUtils.getEndTime(nowTime).replaceAll("[\\-: ]", "")
-      val day = endTime.slice(0, 8)
-      val hour = endTime.slice(8, 10)
-      val minute = endTime.slice(10, 12)
-      val path = Array[String](outPath, day, hour, minute).mkString("/")
 
       // 数据落地保存
+      val path = Array[String](outPath, day, hour, minute).mkString("/")
       myrdd.map(_.mkString(",")).saveAsTextFile(path)
 
       // 5分钟栅格汇总
       val path1 = Array[String](pathgrid, day, hour, minute).mkString("/")
-      GridUser5Min.GridSumPersion(myrdd, path1)
+      GridUser5Min.GridSumPersion(myrdd, path1, usetime)
 
       // 归属地汇总
       val path2 = Array[String](pathlocale, day, hour, minute).mkString("/")
-      LteAreaSum5Min.sumProcess1(myrdd, path2)
+      LteAreaSum5Min.sumProcess1(myrdd, path2, usetime)
 
       // 区域5分钟汇总
       val path3 = Array[String](patharea, day, hour, minute).mkString("/")
-      LteAreaSum5Min.sumProcess2(myrdd, path3)
+      LteAreaSum5Min.sumProcess2(myrdd, path3, usetime)
   }
 
 }
