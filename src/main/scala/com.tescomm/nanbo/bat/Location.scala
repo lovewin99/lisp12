@@ -10,6 +10,8 @@ import org.apache.log4j.{Logger,Level}
 import scala.collection.mutable.ArrayBuffer
 import com.tescomm.utils.DateUtils
 
+
+
 /**
  *spark-submit --master spark://cloud138:7077 --total-executor-cores 50 --executor-memory 15g --jars  \
 jedis-2.1.0.jar,commons-pool-1.5.6.jar,redisclient_2.10-2.12.jar,commons-pool-1.5.6.jar \
